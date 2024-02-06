@@ -6,7 +6,7 @@
 <body>
 	<!-- Below For Eclipse-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
+ 
     <div class="container">
 
         <a class="navbar-brand" href="#" id="logo"><span class="brand">C</span>ash<span class="brand">N</span>ex</a>
