@@ -10,7 +10,9 @@ public class DBUtility {
     private static final String USER = "root";
     private static final String PASSWORD = "Lucifer";
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+		Class.forName("com.mysql.cj.jdbc.Driver"); 
+
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
