@@ -9,7 +9,6 @@ public class AdminDao {
 
 	public String checkAdminUsername() throws ClassNotFoundException, SQLException {
 		
-		Class.forName("com.mysql.cj.jdbc.Driver"); 
 		Connection con = DBUtility.getConnection(); 
 		
 		Statement stmt = con.createStatement(); 

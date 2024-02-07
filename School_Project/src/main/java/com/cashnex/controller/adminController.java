@@ -55,7 +55,7 @@ public class adminController extends HttpServlet {
         
         if ((storedAdminUsername != null && storedAdminUsername.equals(adminUsername)) && (adminPassword != null
         		&& storedAdminPassword.equals(storedAdminPassword))) {
-            response.getWriter().append("Mingalar Par");
+            request.getRequestDispatcher("views/adminDashboard.jsp").forward(request, response);
         } else {
             response.getWriter().append("Access Denied");
         }
