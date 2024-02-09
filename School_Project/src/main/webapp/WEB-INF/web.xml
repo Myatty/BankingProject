@@ -49,5 +49,14 @@
     <servlet-name>adminController</servlet-name>
     <url-pattern>/adminController</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>UserToDatabase</display-name>
+    <servlet-name>UserToDatabase</servlet-name>
+    <servlet-class>com.cashnex.controller.UserToDatabase</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserToDatabase</servlet-name>
+    <url-pattern>/UserToDatabase</url-pattern>
+  </servlet-mapping>
 </web-app>

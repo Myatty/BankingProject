@@ -25,7 +25,6 @@ public class AdminDao {
 	}
 	public String checkAdminPassword() throws ClassNotFoundException, SQLException {
 		
-		Class.forName("com.mysql.cj.jdbc.Driver"); 
 		Connection con = DBUtility.getConnection(); 
 		
 		Statement stmt = con.createStatement(); 
@@ -33,7 +32,7 @@ public class AdminDao {
 		
 		String adminPassword = null;
 		while (rs.next()) {
-			adminPassword = rs.getString("userName");
+			adminPassword = rs.getString("password");
 		}
 		
 		stmt.close(); 

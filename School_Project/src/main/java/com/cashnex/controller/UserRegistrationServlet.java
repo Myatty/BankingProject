@@ -10,11 +10,11 @@ import java.io.IOException;
 /**
  * Servlet implementation class UserLoginServlet
  */
-@WebServlet("/UserLogin")
-public class UserLoginServlet extends HttpServlet {
+@WebServlet("/UserRegistration")
+public class UserRegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public UserLoginServlet() {
+    public UserRegistrationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -23,15 +23,27 @@ public class UserLoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		
-		String username = request.getParameter("username");
+		String userName = request.getParameter("username");
 		String nrcNumber = request.getParameter("nrcNumber");
 		String userGmail = request.getParameter("userGmail");
 		String career = request.getParameter("career");
 		String userPassword = request.getParameter("userPassword");
+		String userBalance = request.getParameter("userBalance");
 		
 		var out = response.getWriter();
 		
-		out.append(username + " " + nrcNumber + " " + userGmail + " " + career + " " + userPassword);
+		request.setAttribute("userName", userName);
+		request.setAttribute("nrcNumber", nrcNumber);
+		request.setAttribute("userGmail", userGmail);
+		request.setAttribute("career", career);
+		request.setAttribute("userPassword", userPassword);
+		request.setAttribute("userBalance", userBalance);
+		
+    	request.setAttribute("adminApproval", 0);             // Admin Approval
+
+		request.getRequestDispatcher("views/adminDashboard.jsp").forward(request, response);
+		
+//		out.append(username + " " + nrcNumber + " " + userGmail + " " + career + " " + userPassword);
 	}
 
 	/**
