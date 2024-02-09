@@ -14,9 +14,11 @@
 					<c:set var="test" value="${requestScope.test}" />
 					
 					<c:set var="adminApproval" value="${requestScope.adminApproval}" />
-					<c:set var="userName" value="${requestScope.userName}" />
+					<c:set var="userName" value="dog" />
 					<c:set var="nrcNumber" value="${requestScope.nrcNumber}" />
 
+					<c:out value="${userName}"/>
+			
 					<c:choose>
 						<c:when test="${test eq 1}">
 							<p>There will be a list</p>

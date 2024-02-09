@@ -43,11 +43,12 @@ public class UserDao {
 	}
 
 	public void insertUserData(String userName, String nrcNumber, String userGmail, String career
-			, String userPassword, float userBalance) throws SQLException, ClassNotFoundException {
+			, String userPassword, double userBalance) throws SQLException, ClassNotFoundException {
 		
 		Connection con = DBUtility.getConnection();
-		String sql = "INSERT INTO usertable (username, nrcNumber, userGmail, career, userPassword, userBalance) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO usertable (username, nrcNumber, userGmail, career, hashedPassword, balance) VALUES (?, ?, ?, ?, ?, ?)";
 
+		//need to hash
 		
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		
@@ -56,7 +57,7 @@ public class UserDao {
 		pstmt.setString(3, userGmail);
 		pstmt.setString(4, career);
 		pstmt.setString(5, userPassword);
-		pstmt.setFloat(6, userBalance);
+		pstmt.setDouble(6, userBalance);
 		
 		int rowAffected = pstmt.executeUpdate();
 		
