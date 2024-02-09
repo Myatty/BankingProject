@@ -20,7 +20,7 @@ public class adminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	  public AdminDao adminDao; // Declare AdminDao variable
-	  public UserDao userDao; // Declare AdminDao variable
+	  public UserDao userDao; // Declare UserDao variable
 	    
 	    // Initialize AdminDao instance in servlet's init() method
 	    @Override
