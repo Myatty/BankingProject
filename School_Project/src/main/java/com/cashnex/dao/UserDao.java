@@ -4,10 +4,65 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.cashnex.model.User;
+import java.sql.Statement;
 
 public class UserDao {
+
+	public String checkAdminUsername() throws ClassNotFoundException, SQLException {
+
+		Connection con = DBUtility.getConnection();
+
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("select * from userTable");
+
+		String userName = null;
+		while (rs.next()) {
+			userName = rs.getString("userName");
+		}
+
+		stmt.close();
+		con.close();
+		return userName;
+	}
+
+	public String checkAdminPassword() throws ClassNotFoundException, SQLException {
+
+		Connection con = DBUtility.getConnection();
+
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("select * from userTable");
+
+		String adminPassword = null;
+		while (rs.next()) {
+			adminPassword = rs.getString("password");
+		}
+
+		stmt.close();
+		con.close();
+		return adminPassword;
+	}
+
+	public void insertUserData(String userName, String nrcNumber, String userGmail, String career
+			, String userPassword, float userBalance) throws SQLException, ClassNotFoundException {
+		
+		Connection con = DBUtility.getConnection();
+		String sql = "INSERT INTO usertable (username, nrcNumber, userGmail, career, userPassword, userBalance) VALUES (?, ?, ?, ?, ?, ?)";
+
+		
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		
+		pstmt.setString(1, userName);
+		pstmt.setString(2, nrcNumber);
+		pstmt.setString(3, userGmail);
+		pstmt.setString(4, career);
+		pstmt.setString(5, userPassword);
+		pstmt.setFloat(6, userBalance);
+		
+		int rowAffected = pstmt.executeUpdate();
+		
+		// Log here to check whether insertion is succeeded or not
+		
+	}
 
 //    private ConnectionManager connectionManager;
 //
@@ -64,4 +119,5 @@ public class UserDao {
 //        user.setPassword(resultSet.getString("password"));
 //        return user;
 //    }
+
 }

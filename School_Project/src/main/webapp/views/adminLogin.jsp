@@ -9,7 +9,7 @@
 		<div class="col-4 offset-4">
 	
 		<form method="post"
-			action="${pageContext.request.contextPath}/adminPanel">
+			action="${pageContext.request.contextPath}/adminLogin">
 			<div class="mb-3 mt-5">
 				<label for="exampleFormControlInput1">Username </label> <input
 					type="text" class="form-control" name="adminUsername"

@@ -20,7 +20,7 @@ public class Security {
     
 	private String hashPassword(String rawPassword) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 	
-		  // Step 1: Choose the encryption algorithm and mode
+		// Step 1: Choose the encryption algorithm and mode
 	    String algorithm = "AES";
 	    String transformation = "AES/ECB/PKCS5Padding";
 	    
