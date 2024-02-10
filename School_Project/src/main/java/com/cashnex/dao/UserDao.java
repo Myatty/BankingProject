@@ -5,42 +5,44 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao {
 
-	public String checkAdminUsername() throws ClassNotFoundException, SQLException {
+	public List<String> checkUsernames() throws SQLException, ClassNotFoundException {
+        List<String> usernames = new ArrayList<>();
+        Connection con = DBUtility.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT userName FROM userTable");
 
-		Connection con = DBUtility.getConnection();
+        while (rs.next()) {
+            usernames.add(rs.getString("userName"));
+        }
 
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("select * from userTable");
+        rs.close();
+        stmt.close();
+        con.close();
 
-		String userName = null;
-		while (rs.next()) {
-			userName = rs.getString("userName");
-		}
+        return usernames;
+    }
 
-		stmt.close();
-		con.close();
-		return userName;
-	}
+    public List<String> checkPasswords() throws SQLException, ClassNotFoundException {
+        List<String> passwords = new ArrayList<>();
+        Connection con = DBUtility.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT password FROM userTable");
 
-	public String checkAdminPassword() throws ClassNotFoundException, SQLException {
+        while (rs.next()) {
+            passwords.add(rs.getString("password"));
+        }
 
-		Connection con = DBUtility.getConnection();
+        rs.close();
+        stmt.close();
+        con.close();
 
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("select * from userTable");
-
-		String adminPassword = null;
-		while (rs.next()) {
-			adminPassword = rs.getString("password");
-		}
-
-		stmt.close();
-		con.close();
-		return adminPassword;
-	}
+        return passwords;
+    }
 
 	public void insertUserData(String userName, String nrcNumber, String userGmail, String career
 			, String userPassword, double userBalance) throws SQLException, ClassNotFoundException {
