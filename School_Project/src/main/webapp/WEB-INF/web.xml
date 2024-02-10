@@ -59,4 +59,14 @@
     <servlet-name>UserToDatabase</servlet-name>
     <url-pattern>/UserToDatabase</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserLoginController</display-name>
+    <servlet-name>UserLoginController</servlet-name>
+    <servlet-class>com.cashnex.controller.UserLoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserLoginController</servlet-name>
+    <url-pattern>/UserLoginController</url-pattern>
+  </servlet-mapping>
 </web-app>
