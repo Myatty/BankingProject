@@ -45,7 +45,7 @@
 					<button type="submit">Log In</button>
 				</form>
 				<div class="bottom-link">
-					Don't have an account? <a href="#" id="signup-link">Register</a>
+					Don't have an account? <a href="${pageContext.request.contextPath}/views/userRegistration.jsp" id="signup-link">Register</a>
 				</div>
 			</div>
 		</div>
