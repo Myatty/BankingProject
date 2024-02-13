@@ -69,4 +69,14 @@
     <servlet-name>UserLoginController</servlet-name>
     <url-pattern>/UserLoginController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>balanceTransferServlet</display-name>
+    <servlet-name>balanceTransferServlet</servlet-name>
+    <servlet-class>com.cashnex.controller.balanceTransferServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>balanceTransferServlet</servlet-name>
+    <url-pattern>/balanceTransferServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
