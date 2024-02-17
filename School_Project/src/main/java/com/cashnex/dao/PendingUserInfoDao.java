@@ -11,11 +11,11 @@ import com.cashnex.model.User;
 
 public class PendingUserInfoDao {
 
-	 public void insertUserData(String userName, String nrcNumber, String userGmail, String career, String userPassword,
-		      double userBalance) throws SQLException, ClassNotFoundException {
+	 public void insertUserData(String userName, String nrcNumber, String userGmail, String career, String userPassword
+		      ) throws SQLException, ClassNotFoundException {
 
 		    Connection con = DBUtility.getConnection();
-		    String sql = "INSERT INTO pendingUserInfo (username, nrcNumber, gmail, career, hashedPassword, balance) VALUES (?, ?, ?, ?, ?, ?)";
+		    String sql = "INSERT INTO pendingUserInfo (username, nrcNumber, gmail, career, hashedPassword) VALUES (?, ?, ?, ?, ?)";
 
 		    PreparedStatement pstmt = con.prepareStatement(sql);
 
@@ -24,7 +24,7 @@ public class PendingUserInfoDao {
 		    pstmt.setString(3, userGmail);
 		    pstmt.setString(4, career);
 		    pstmt.setString(5, userPassword);
-		    pstmt.setDouble(6, userBalance);
+//		    pstmt.setDouble(6, userBalance);
 
 		    int rowAffected = pstmt.executeUpdate();
 

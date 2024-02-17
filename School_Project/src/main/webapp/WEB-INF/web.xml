@@ -79,4 +79,14 @@
     <servlet-name>balanceTransferServlet</servlet-name>
     <url-pattern>/balanceTransferServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>adminDashboardController</display-name>
+    <servlet-name>adminDashboardController</servlet-name>
+    <servlet-class>com.cashnex.controller.adminDashboardController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminDashboardController</servlet-name>
+    <url-pattern>/adminDashboardController</url-pattern>
+  </servlet-mapping>
 </web-app>
