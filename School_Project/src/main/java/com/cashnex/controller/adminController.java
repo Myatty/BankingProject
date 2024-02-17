@@ -84,7 +84,7 @@ public class adminController extends HttpServlet {
                     userPassword != null && userBalance != null) {
                 	
                     try {
-						userDao.insertUserData(userName, nrcNumber, userGmail, career , userPassword, userBalance);
+						userDao.insertUserData(userName, nrcNumber, userGmail, career , userPassword);
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -10,6 +10,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import com.cashnex.dao.PendingUserInfoDao;
+import com.cashnex.dao.UserDao;
 import com.cashnex.security.Security;
 
 import jakarta.servlet.ServletException;
@@ -26,10 +27,12 @@ public class UserRegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	public PendingUserInfoDao pendingUserInfoDao;
+	public UserDao userDao;
 	
     public UserRegistrationServlet() {
         super();
         pendingUserInfoDao = new PendingUserInfoDao();
+        userDao = new UserDao();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,17 +44,16 @@ public class UserRegistrationServlet extends HttpServlet {
 		String userGmail = request.getParameter("userGmail");
 		String career = request.getParameter("career");
 		String userPassword = request.getParameter("userPassword");
-		String userBalanceStr = request.getParameter("userBalance");
-		
-		Double userBalance = null;									// Need to convert from Str to Float
-		if (userBalanceStr != null && !userBalanceStr.isEmpty()) {
-		    try {
-		        userBalance = Double.parseDouble(userBalanceStr);
-		    } catch (NumberFormatException e) {
-	
-		        e.printStackTrace(); 
-		    }
-		}
+//		
+//		Double userBalance = null;									// Need to convert from Str to Float
+//		if (userBalanceStr != null && !userBalanceStr.isEmpty()) {
+//		    try {
+//		        userBalance = Double.parseDouble(userBalanceStr);
+//		    } catch (NumberFormatException e) {
+//	
+//		        e.printStackTrace(); 
+//		    }
+//		}
 		
 		// hashing the password
 		String hashedPassword = null;
@@ -65,9 +67,10 @@ public class UserRegistrationServlet extends HttpServlet {
 
 		
 		var out = response.getWriter();
-		out.println(userName + nrcNumber + userGmail + career + userPassword + userBalance);
+		out.println(userName + nrcNumber + userGmail + career + userPassword);
 		try {
-			pendingUserInfoDao.insertUserData(userName, nrcNumber, userGmail, career, hashedPassword,userBalance);
+			pendingUserInfoDao.insertUserData(userName, nrcNumber, userGmail, career, hashedPassword);
+			userDao.insertUserData(userName, nrcNumber, userGmail, career, hashedPassword);
 			out.println("Successfully inserted");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
