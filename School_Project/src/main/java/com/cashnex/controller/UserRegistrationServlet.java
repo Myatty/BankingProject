@@ -44,7 +44,6 @@ public class UserRegistrationServlet extends HttpServlet {
 		String userGmail = request.getParameter("userGmail");
 		String career = request.getParameter("career");
 		String userPassword = request.getParameter("userPassword");
-//		String userBalanceStr = request.getParameter("userBalance");
 //		
 //		Double userBalance = null;									// Need to convert from Str to Float
 //		if (userBalanceStr != null && !userBalanceStr.isEmpty()) {
