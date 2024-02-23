@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * Servlet implementation class adminController
  */
 @WebServlet("/adminLogin")
-public class adminController extends HttpServlet {
+public class adminLoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	  public AdminDao adminDao; // Declare AdminDao variable
@@ -46,62 +46,51 @@ public class adminController extends HttpServlet {
 		try {
 			storedAdminUsername = adminDao.checkAdminUsername();
 			storedAdminPassword = adminDao.checkAdminPassword();
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		} 
         
         if ((storedAdminUsername != null && storedAdminUsername.equals(adminUsername)) && 
         		(storedAdminPassword != null && storedAdminPassword.equals(adminPassword))) {
         	
         	request.setAttribute("test", 1);
-            request.getRequestDispatcher("views/adminDashboard.jsp").forward(request, response);
+            //request.getRequestDispatcher("adminDashboardController").forward(request, response);
+        	response.sendRedirect(request.getContextPath() + "/adminDashboardController");
+
         } else {
             response.getWriter().append("Access Denied");
         }
         
      // Retrieve attributes set in the previous request
-        String userName = (String) request.getAttribute("userName");
-        String nrcNumber = (String) request.getAttribute("nrcNumber");
-        String userGmail = (String) request.getAttribute("userGmail");
-        String career = (String) request.getAttribute("career");
-        String userPassword = (String) request.getAttribute("userPassword");
-        Float userBalance = (float) request.getAttribute("userBalance");
-        
-        int test = (int) request.getAttribute("test");
-        
-        String numberInput = request.getParameter("numberInput"); //from adminDashboard -- Balance amount
-
-        if (test == 1) {
-            // Logic to handle approval or denial of user registration
-            if (request.getParameter("approveBtn") != null) {
-                // Handle approval
-                if (userName != null && nrcNumber != null && userGmail != null && career != null &&
-                    userPassword != null && userBalance != null) {
-                	
-                    try {
-						userDao.insertUserData(userName, nrcNumber, userGmail, career , userPassword);
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					response.getWriter().append("User data inserted successfully");
-                } else {
-                    response.getWriter().append("Incomplete user data");
-                }
-            } else if (request.getParameter("denyBtn") != null) {
-                // Handle denial
-                // You can add logic here if needed
-                response.getWriter().append("User registration denied");
-            }
-        }
+		/*
+		 * String userName = (String) request.getAttribute("userName"); String nrcNumber
+		 * = (String) request.getAttribute("nrcNumber"); String userGmail = (String)
+		 * request.getAttribute("userGmail"); String career = (String)
+		 * request.getAttribute("career"); String userPassword = (String)
+		 * request.getAttribute("userPassword"); Float userBalance = (float)
+		 * request.getAttribute("userBalance");
+		 * 
+		 * int test = (int) request.getAttribute("test");
+		 * 
+		 * String numberInput = request.getParameter("numberInput"); //from
+		 * adminDashboard -- Balance amount
+		 * 
+		 * if (test == 1) { // Logic to handle approval or denial of user registration
+		 * if (request.getParameter("approveBtn") != null) { // Handle approval if
+		 * (userName != null && nrcNumber != null && userGmail != null && career != null
+		 * && userPassword != null && userBalance != null) {
+		 * 
+		 * try { userDao.insertUserData(userName, nrcNumber, userGmail, career ,
+		 * userPassword); } catch (ClassNotFoundException e) { // TODO Auto-generated
+		 * catch block e.printStackTrace(); } catch (SQLException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); }
+		 * response.getWriter().append("User data inserted successfully"); } else {
+		 * response.getWriter().append("Incomplete user data"); } } else if
+		 * (request.getParameter("denyBtn") != null) { // Handle denial // You can add
+		 * logic here if needed response.getWriter().append("User registration denied");
+		 * } }
+		 */
     }
 
 

@@ -1,58 +1,6 @@
-<%-- <%@ include file="header.jsp"%>
-<!--  Link tags -->
-
-</head>
-<body>
-
-	<div class="container">
-		<div class="col-4 offset-4">
-	
-		<form method="post" 
-			action="${pageContext.request.contextPath}/UserRegistration">
-			<div class="mb-3 mt-5">
-				<label for="exampleFormControlInput1">Name</label> <input
-					type="text" class="form-control" name="username"
-					placeholder="Enter your Username Here">
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlInput1">NRC </label> <input
-					type="text" class="form-control" name="nrcNumber"
-					placeholder="Enter your NRC Number Here">
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlInput1">Gmail </label> <input
-					type="email" class="form-control" name="userGmail"
-					placeholder="Enter your Gmail Here">
-			</div>
-			<div class="mb-3">
-				<label >Choose your Career Here</label>
-				<select class="form-select" aria-label="" name="career">
-					<option>Teacher</option>
-					<option>Student</option>
-					<option>Engineer</option>
-					<option>Dog</option>
-				</select>
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlInput1">Password </label> <input
-					type="password" class="form-control" name="userPassword"
-					placeholder="Enter your Password Here">
-			</div>
-			<div class="mb-3">
-				<label for="exampleFormControlInput1">Balance </label> <input
-					type="number" class="form-control" name="userBalance"
-					placeholder="Enter your Initial Balance Here">
-			</div>
-			<button class="btn btn-success">Register</button>	
-		</form>
-		
-		</div>
-	</div>
-<%@ include file="footer.jsp"%> --%>
-
 <%@ include file="header.jsp"%>
-<!--  Link tags -->
 
+<!--  Link tags -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/home_style.css" />
 <link rel="stylesheet"
@@ -63,30 +11,31 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 
-
 </head>
 
 <body class="show-popup">
+
 	<!-- Below For Eclipse-->
+	
+	
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
+	
 		<div class="container">
-
 			<a class="navbar-brand" href="#" id="logo"><span class="brand">C</span>ash<span
 				class="brand">N</span>ex</a>
-
-
 		</div>
 
 	</nav>
 
 	<div class="blur-bg-overlay"></div>
+	
 	<div class="form-popup">
 		<div class="form-box login">
 			<div class="form-content">
 				<h2>Register</h2>
 				<form method="post"
-					action="${pageContext.request.contextPath}/UserRegistration">
+					action="${pageContext.request.contextPath}/UserRegistration"
+					onsubmit="showNotification()">
 					<div class="input-field">
 						<input type="text" name="username" required> <label>Name</label>
 					</div>
@@ -111,7 +60,8 @@
 							onchange="changes(this)" required> <label>NRC</label>
 					</div> -->
 					<div class="input-field">
-						<input type="text" name="nrcNumber" id="6487" required> <label>NRC number</label>
+						<input type="text" name="nrcNumber" id="6487" required> <label>NRC
+							number</label>
 					</div>
 					<div class="input-field">
 						<input type="text" name="userGmail" id="6487" required> <label>Email</label>
@@ -149,9 +99,9 @@
 		</div>
 	</div>
 
+
 </body>
 <script
-
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
 	integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
 	crossorigin="anonymous"></script>
@@ -181,6 +131,7 @@
 		con = !con;
 
 	}
+
 </script>
 
 </html>

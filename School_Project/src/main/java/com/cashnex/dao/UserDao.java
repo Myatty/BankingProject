@@ -53,15 +53,31 @@ public class UserDao {
 
 		return usernames;
 	}
+	public List<String> checkUserGmails() throws SQLException, ClassNotFoundException {
+		List<String> usernames = new ArrayList<>();
+		Connection con = DBUtility.getConnection();
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT gmail FROM userTable");
+		
+		while (rs.next()) {
+			usernames.add(rs.getString("gmail"));
+		}
+		
+		rs.close();
+		stmt.close();
+		con.close();
+		
+		return usernames;
+	}
 
 	public List<String> checkPasswords() throws SQLException, ClassNotFoundException {
 		List<String> passwords = new ArrayList<>();
 		Connection con = DBUtility.getConnection();
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT password FROM userTable");
+		ResultSet rs = stmt.executeQuery("SELECT hashedPassword FROM userTable");
 
 		while (rs.next()) {
-			passwords.add(rs.getString("password"));
+			passwords.add(rs.getString("hashedPassword"));
 		}
 
 		rs.close();

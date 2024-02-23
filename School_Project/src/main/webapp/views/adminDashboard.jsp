@@ -29,7 +29,6 @@
 				onclick="window.location.href = 'userRegistration.jsp'">Add
 				User</button>
 		</p>
-		<c:out value="Lee"></c:out>
 		<table class="table table-bordered">
 			<tr>
 				<th>User Name</th>

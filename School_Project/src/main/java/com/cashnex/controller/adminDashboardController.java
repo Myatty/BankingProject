@@ -76,7 +76,7 @@ public class adminDashboardController extends HttpServlet {
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		List<User> userList = userDao.getUserList();
 		request.setAttribute("userList", userList);
-		request.getRequestDispatcher("/views/adminDashboard.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/adminPage.jsp").forward(request, response);
 	}
 
 	private void getUser(HttpServletRequest request, HttpServletResponse response)
@@ -92,7 +92,9 @@ public class adminDashboardController extends HttpServlet {
 		} 
 		
 		request.setAttribute("user", user);
-		request.getRequestDispatcher("/views/userRegistration.jsp").forward(request, response);
+		//request.getRequestDispatcher("/views/userRegistration.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/views/adminPage.jsp");
+
 	}
 
 	private void deleteUser(HttpServletRequest request, HttpServletResponse response)
