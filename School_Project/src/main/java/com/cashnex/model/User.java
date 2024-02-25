@@ -9,6 +9,7 @@ public class User {
 	private String email;
 	private String password;
 	private Double balance;
+	private String accountNumber;
 
 	public void setUserId(int userId) {
 		this.userId = userId;
@@ -64,5 +65,13 @@ public class User {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 }

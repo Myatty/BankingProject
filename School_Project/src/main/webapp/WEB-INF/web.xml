@@ -89,4 +89,14 @@
     <servlet-name>adminDashboardController</servlet-name>
     <url-pattern>/adminDashboardController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserDashboardController</display-name>
+    <servlet-name>UserDashboardController</servlet-name>
+    <servlet-class>com.cashnex.controller.UserDashboardController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserDashboardController</servlet-name>
+    <url-pattern>/UserDashboardController</url-pattern>
+  </servlet-mapping>
 </web-app>

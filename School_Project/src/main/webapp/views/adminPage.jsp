@@ -277,6 +277,7 @@
 												<th>Gmail</th>
 												<th>Career</th>
 												<th>Balance</th>
+												<th>Account Number</th>
 												<th>Actions</th>
 											</tr>
 										</thead>
@@ -297,11 +298,10 @@
 													<td>${user.email}</td>
 													<td>${user.career}</td>
 													<td>${user.balance}</td>
+													<td>${user.accountNumber}</td>
 													<td><a
 														href="${pageContext.request.contextPath}/adminDashboardController?action=EDIT&id=${user.id}">Add
 															Balance</a> |<a
-														href="${pageContext.request.contextPath}/adminDashboardController?action=EDIT&id=${user.id}">Edit</a>
-														| <a
 														href="${pageContext.request.contextPath}/adminDashboardController?action=DELETE&id=${user.id}">Delete</a>
 													</td>
 												</tr>
