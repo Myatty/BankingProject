@@ -11,6 +11,53 @@ import java.util.List;
 import com.cashnex.model.User;
 
 public class UserDao {
+	
+	public User getUserByUserId(int userId) throws SQLException, ClassNotFoundException {
+        User user = null;
+        
+        try (Connection con = DBUtility.getConnection();
+             PreparedStatement stmt = con.prepareStatement("SELECT * FROM userTable WHERE userId = ?")) {
+            stmt.setInt(1, userId);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+
+            	if (rs.next()) {
+
+                	user = new User();
+                    user.setUserId(rs.getInt("userId"));
+                    user.setUsername(rs.getString("userName"));
+                    user.setNrcNumber(rs.getString("nrcNumber"));
+                    user.setEmail(rs.getString("gmail"));
+                    user.setCareer(rs.getString("Career"));
+                    user.setBalance(rs.getDouble("balance"));
+                    user.setPassword(rs.getString("hashedPassword"));
+                    user.setAccountNumber(rs.getString("accountNumber"));
+            	}
+            }
+        }
+        
+        return user;
+    }
+	
+	public int getUserIdByEmailAndPassword(String userEmail, String userPassword) throws SQLException, ClassNotFoundException {
+		
+		Connection con = DBUtility.getConnection();
+        int userId = -1;
+        String query = "SELECT userId FROM userTable WHERE gmail = ? AND hashedPassword = ?";
+        
+        try (PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setString(1, userEmail);
+            statement.setString(2, userPassword);
+            
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    userId = resultSet.getInt("userId");
+                }
+            }
+        }
+        
+        return userId;
+    }
 
 	public List<User> getUserList() throws ClassNotFoundException, SQLException {
 
@@ -30,6 +77,8 @@ public class UserDao {
 			user.setCareer(rs.getString("Career"));
 			user.setBalance(rs.getDouble("balance"));
 			user.setPassword(rs.getString("hashedPassword"));
+            user.setAccountNumber(rs.getString("accountNumber"));
+
 			list.add(user);
 		}
 
@@ -87,11 +136,12 @@ public class UserDao {
 		return passwords;
 	}
 
-	public void insertUserData(String userName, String nrcNumber, String userGmail, String career, String userPassword
+	public void insertUserData(String userName, String nrcNumber, String userGmail, String career, String userPassword, String accountNumber
 			) throws SQLException, ClassNotFoundException {
 
 		Connection con = DBUtility.getConnection();
-		String sql = "INSERT INTO usertable (username, nrcNumber, gmail, career, hashedPassword) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO usertable (username, nrcNumber, gmail, career, hashedPassword, accountNumber)"
+				+ " VALUES (?, ?, ?, ?, ?, ?)";
 
 		// need to hash
 
@@ -102,6 +152,7 @@ public class UserDao {
 		pstmt.setString(3, userGmail);
 		pstmt.setString(4, career);
 		pstmt.setString(5, userPassword);
+		pstmt.setString(6, accountNumber);
 //		pstmt.setDouble(6, userBalance);
 
 		int rowAffected = pstmt.executeUpdate();
@@ -114,18 +165,20 @@ public class UserDao {
 		User user = null;
 		   
 			user = new User();
-			String sql = "SELECT * FROM tbl_student where id="+id;
+			String sql = "SELECT * FROM userTable where id="+id;
 			Connection connection = DBUtility.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(sql);
 			if(resultSet.next()) {
-				user.setUserId(resultSet.getInt("id"));
+				user.setUserId(resultSet.getInt("userId"));
 				user.setUsername(resultSet.getString("username"));
 				user.setNrcNumber(resultSet.getString("nrcNumber"));
 				user.setEmail(resultSet.getString("gmail"));
 				user.setCareer(resultSet.getString("Career"));
 				user.setBalance(resultSet.getDouble("balance"));
 				user.setPassword(resultSet.getString("hashedPassword"));
+                user.setAccountNumber(resultSet.getString("accountNumber"));
+
 				}
 			
 		    return user;
@@ -146,6 +199,7 @@ public class UserDao {
 	}
 
 	// Insert Data using User Object
+	// Below methods are not updated
 	public boolean saveUser(User user) throws SQLException, ClassNotFoundException {
 		boolean flag = false;
 

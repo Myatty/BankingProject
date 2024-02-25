@@ -1,12 +1,12 @@
 package com.cashnex.controller;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
 import java.sql.SQLException;
 
 import com.cashnex.dao.PendingUserInfoDao;
 import com.cashnex.dao.UserDao;
 import com.cashnex.security.Security;
+import com.cashnex.service.AccountNumberGenerator;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -40,12 +40,14 @@ public class UserRegistrationServlet extends HttpServlet {
 		String userGmail = request.getParameter("userGmail");
 		String career = request.getParameter("career");
 		String userPassword = request.getParameter("userPassword");
-
+		
 		String hashedPassword = Security.doHashing(userPassword);
+		String accountNumber = AccountNumberGenerator.generateAccountNumber();
+		
 
 		try {
-			pendingUserInfoDao.insertUserData(userName, nrcNumber, userGmail, career, hashedPassword);
-			userDao.insertUserData(userName, nrcNumber, userGmail, career, hashedPassword);
+			pendingUserInfoDao.insertUserData(userName, nrcNumber, userGmail, career, hashedPassword,accountNumber);
+			userDao.insertUserData(userName, nrcNumber, userGmail, career, hashedPassword,accountNumber);
 			// Set success message attribute
 			request.setAttribute("registrationSuccess", true);
 		} catch (ClassNotFoundException | SQLException e) {

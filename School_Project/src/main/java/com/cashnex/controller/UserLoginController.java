@@ -1,15 +1,9 @@
 package com.cashnex.controller;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import com.cashnex.dao.UserDao;
 import com.cashnex.security.Security;
@@ -19,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/userLogin")
 public class UserLoginController extends HttpServlet {
@@ -46,17 +41,11 @@ public class UserLoginController extends HttpServlet {
 		String userPassword = request.getParameter("userPassword");
 		String hashedPassword = null;
 		String decryptedPassword = null;
+		int userId = 0;
 		List<String> storedUserGmails = new ArrayList<>();
 		List<String> storedUserPasswords = new ArrayList<>();
 		List<String> decryptedPasswords = new ArrayList<>();
 
-		/*
-		 * //Original try { hashedPassword = Security.hashPassword(userPassword); }
-		 * catch (InvalidKeyException | NoSuchAlgorithmException |
-		 * NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
-		
 		//MD-5
 		hashedPassword = Security.doHashing(userPassword);
 		
@@ -67,21 +56,7 @@ public class UserLoginController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		/*
-		 * for (String password : storedUserPasswords) { String storedPassword = null;
-		 * try { storedPassword = Security.decryptPassword(password);
-		 * decryptedPasswords.add(storedPassword); } catch (InvalidKeyException |
-		 * NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
-		 * | BadPaddingException e) { // Handle decryption exceptions
-		 * e.printStackTrace(); } finally { if (storedPassword != null) {
-		 * response.getWriter().append(storedPassword); } } }
-		 */
-
-			
-		
-		
-
 		if ((storedUserGmails != null && storedUserPasswords != null) 
 				&& ((storedUserGmails.contains(userGmail) && (storedUserPasswords.contains(hashedPassword))))) {
 
@@ -89,43 +64,30 @@ public class UserLoginController extends HttpServlet {
 
 		} else {
 			response.getWriter().append("Bad");
-			response.getWriter().append(hashedPassword);
-			
-			
+			response.getWriter().append(hashedPassword);	
 		}
-		/*
-		 * for(String password : decryptedPasswords) {
-		 * response.getWriter().append(password); response.getWriter().append("lee"); }
-		 */
-		/*
-		 * if (storedUserGmails != null && storedUserPasswords != null) { boolean found
-		 * = false; for (int i = 0; i < storedUserGmails.size(); i++) { String
-		 * storedUserGmail = storedUserGmails.get(i); String storedPassword =
-		 * storedUserPasswords.get(i); try { decryptedPassword =
-		 * Security.decryptPassword(storedPassword);
-		 * response.getWriter().append("Decrypted Password is " + decryptedPassword);
-		 * 
-		 * if (storedUserGmail.equals(userGmail) &&
-		 * decryptedPassword.equals(userPassword)) { found = true; break; } } catch
-		 * (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException |
-		 * IllegalBlockSizeException | BadPaddingException e) { // Handle decryption
-		 * errors e.printStackTrace(); } }
-		 * 
-		 * if (found) { response.getWriter().append("Nice"); } else {
-		 * response.getWriter().append("Bad"); response.getWriter().append(userGmail);
-		 * response.getWriter().append(userPassword); } } else {
-		 * response.getWriter().append("Null"); response.getWriter().append(userGmail);
-		 * response.getWriter().append(userPassword); }
-		 */
-
-		/*
-		 * response.getWriter().append(userGmail + " " + hashedPassword); try {
-		 * response.getWriter().append("Decrypted Password is " +
-		 * Security.decyptPassword(hashedPassword)); } catch (InvalidKeyException |
-		 * NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
-		 * | BadPaddingException | IOException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
+		*/
+		
+		// Validate user credentials and retrieve user ID from the database
+	    try {
+			userId = userDao.getUserIdByEmailAndPassword(userGmail, hashedPassword);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    if (userId != -1) {
+	        // User authenticated successfully, store user ID in session
+	        HttpSession session = request.getSession();
+	        session.setAttribute("userId", userId);
+	        
+	        // Redirect user to dashboard or account page
+			response.sendRedirect(request.getContextPath() + "/views/userDashboard.jsp");
+	    } else {
+	        // Authentication failed, display error message to user
+	        request.setAttribute("errorMessage", "Invalid email or password");
+	        //request.getRequestDispatcher("/views/userLogin.jsp").forward(request, response);
+	        response.getWriter().append("LEE");
+	    }
 	}
 
 	/**

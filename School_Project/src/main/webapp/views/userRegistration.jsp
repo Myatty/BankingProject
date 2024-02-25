@@ -16,10 +16,10 @@
 <body class="show-popup">
 
 	<!-- Below For Eclipse-->
-	
-	
+
+
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	
+
 		<div class="container">
 			<a class="navbar-brand" href="#" id="logo"><span class="brand">C</span>ash<span
 				class="brand">N</span>ex</a>
@@ -28,8 +28,8 @@
 	</nav>
 
 	<div class="blur-bg-overlay"></div>
-	
-	<div class="form-popup">
+
+	<div class="form-popup" id="blur">
 		<div class="form-box login">
 			<div class="form-content">
 				<h2>Register</h2>
@@ -87,16 +87,20 @@
 						</div>
 						<label>Password</label>
 					</div>
-					<button type="submit">Register</button>
+					<button type="submit" onclick="toggle()">Register</button>
 				</form>
+
+
+
 				<div class="bottom-link">
 					Already have an account? <a
 						href="${pageContext.request.contextPath}/views/userLogin.jsp"
 						id="signup-link">Log In</a>
 				</div>
-
 			</div>
 		</div>
+
+		
 	</div>
 
 
@@ -132,6 +136,13 @@
 
 	}
 
+	function toggle() {
+		var blur
+		document.getElementById('blur');
+		blur.classList.toggle('active');
+		var popup = document.getElementById('popup');
+		popup.classList.toggle('active');
+	}
 </script>
 
 </html>
