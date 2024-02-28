@@ -270,7 +270,7 @@
 								</div>
 
 								<div class="datatable-container">
-								<p><b>Origibal user Table</b></p>
+								<p><b>Original user Table</b></p>
 									<table class="datatable-table" id="datatablesSimple">
 										<thead>
 											<tr>
@@ -311,7 +311,7 @@
 											</c:forEach>
 										</tbody>
 									</table>
-									<p><b>Origibal user Table</b></p>
+									<p><b>Banned user Table</b></p>
 									<table class="datatable-table" id="datatablesSimple">
 										<thead>
 											<tr>
