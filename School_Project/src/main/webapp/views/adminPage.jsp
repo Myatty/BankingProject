@@ -270,7 +270,9 @@
 								</div>
 
 								<div class="datatable-container">
-								<p><b>Original user Table</b></p>
+									<p>
+										<b>Original user Table</b>
+									</p>
 									<table class="datatable-table" id="datatablesSimple">
 										<thead>
 											<tr>
@@ -303,15 +305,15 @@
 													<td><a
 														href="${pageContext.request.contextPath}/adminDashboardController?action=EDIT&id=${user.getId()}">Add
 															Balance</a> |<a
-														href="${pageContext.request.contextPath}/adminDashboardController?action=DELETE&id=${user.getId()}">Delete</a>
-														|<a
 														href="${pageContext.request.contextPath}/adminDashboardController?action=BAN&id=${user.getId()}">Ban</a>
 													</td>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
-									<p><b>Banned user Table</b></p>
+									<p>
+										<b>Banned user Table</b>
+									</p>
 									<table class="datatable-table" id="datatablesSimple">
 										<thead>
 											<tr>
@@ -342,8 +344,9 @@
 													<td>${user.balance}</td>
 													<td>${user.accountNumber}</td>
 													<td><a
-														href="${pageContext.request.contextPath}/adminDashboardController?action=UNBAN&id=${user.id}">Unban
-														</a>
+														href="${pageContext.request.contextPath}/adminDashboardController?action=UNBAN&id=${user.getId()}">Unban
+													</a> |<a
+														href="${pageContext.request.contextPath}/adminDashboardController?action=DELETE&id=${user.getId()}">Delete</a>
 													</td>
 												</tr>
 											</c:forEach>

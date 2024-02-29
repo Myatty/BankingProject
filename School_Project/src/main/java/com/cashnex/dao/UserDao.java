@@ -217,7 +217,7 @@ public class UserDao {
 	public boolean delete(int id) throws ClassNotFoundException, SQLException {
 		boolean flag = false;
 
-		String sql = "DELETE FROM usertable where userid=" + id;
+		String sql = "DELETE FROM banned_user_table where userid=" + id;
 		Connection con = DBUtility.getConnection();
 		PreparedStatement preparedStatement = con.prepareStatement(sql);
 		int rowDeleted = preparedStatement.executeUpdate();
