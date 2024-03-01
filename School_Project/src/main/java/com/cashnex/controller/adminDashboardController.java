@@ -39,7 +39,7 @@ public class adminDashboardController extends HttpServlet {
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 			break;
 
 		case "EDIT":
@@ -48,7 +48,7 @@ public class adminDashboardController extends HttpServlet {
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 			break;
 
 		case "DELETE":
@@ -57,7 +57,25 @@ public class adminDashboardController extends HttpServlet {
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
+			break;
+
+		case "BAN":
+			try {
+				banUser(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case "UNBAN":
+			try {
+				unbanUser(request, response);
+			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 
 		default:
@@ -66,7 +84,7 @@ public class adminDashboardController extends HttpServlet {
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 			break;
 		}
 
@@ -76,12 +94,18 @@ public class adminDashboardController extends HttpServlet {
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		List<User> userList = userDao.getUserList();
 		request.setAttribute("userList", userList);
+
+		List<User> banUserList = userDao.getBanUserList();
+		request.setAttribute("banUserList", banUserList);
+
 		request.getRequestDispatcher("/views/adminPage.jsp").forward(request, response);
+
+		System.out.println("listUser from controller get called");
 	}
 
 	private void getUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, NumberFormatException, ClassNotFoundException, SQLException {
-		
+
 		String id = request.getParameter("id");
 		User user = null;
 		try {
@@ -89,10 +113,11 @@ public class adminDashboardController extends HttpServlet {
 		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		
+		}
+
 		request.setAttribute("user", user);
-		//request.getRequestDispatcher("/views/userRegistration.jsp").forward(request, response);
+		// request.getRequestDispatcher("/views/userRegistration.jsp").forward(request,
+		// response);
 		response.sendRedirect(request.getContextPath() + "/views/adminPage.jsp");
 
 	}
@@ -104,6 +129,27 @@ public class adminDashboardController extends HttpServlet {
 			request.setAttribute("MSG", "Successfully Deleted");
 		}
 		listUser(request, response);
+		
+	}
+
+	private void banUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, NumberFormatException, ClassNotFoundException, SQLException {
+		String id = request.getParameter("id");
+		if (userDao.ban(Integer.parseInt(id))) {
+			request.setAttribute("MSG", "Successfully Banned");
+		}
+		listUser(request, response);
+		
+	}
+	
+	private void unbanUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, NumberFormatException, ClassNotFoundException, SQLException {
+		String id = request.getParameter("id");
+		if (userDao.unban(Integer.parseInt(id))) {
+			request.setAttribute("MSG", "Successfully Banned");
+		}
+		listUser(request, response);
+		
 	}
 
 	/**
@@ -112,28 +158,27 @@ public class adminDashboardController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String id = request.getParameter("id");
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		user.setNrcNumber(request.getParameter("nrcNumber"));
 		user.setEmail(request.getParameter("gmail"));
 		user.setCareer(request.getParameter("career"));
-		if(id.isEmpty() || id == null) {
+		if (id.isEmpty() || id == null) {
 			try {
-				if(userDao.saveUser(user)) {
-				request.setAttribute("MSG", "Successfully Saved!");
+				if (userDao.saveUser(user)) {
+					request.setAttribute("MSG", "Successfully Saved!");
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			
-		}
-		}
-		else {
+
+			}
+		} else {
 			user.setUserId(Integer.parseInt(id));
-			if(userDao.updateUser(user)) {
-			request.setAttribute("MSG", "Successfully Updated!");
+			if (userDao.updateUser(user)) {
+				request.setAttribute("MSG", "Successfully Updated!");
 			}
 		}
 		try {
@@ -141,7 +186,7 @@ public class adminDashboardController extends HttpServlet {
 		} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 
 	}
 

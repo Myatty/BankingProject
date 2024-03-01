@@ -1,4 +1,8 @@
 <%@ include file="header.jsp"%>
+
+<title>User Login Page</title>
+
+
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/css/home_style.css" />
 <link rel="stylesheet"

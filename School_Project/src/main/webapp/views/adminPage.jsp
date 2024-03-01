@@ -1,21 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ include file="header.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cashnex.controller.adminDashboardController"%>
 
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>Dashboard - SB Admin</title>
+<title>Admin Dashboard</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
 	rel="stylesheet" />
@@ -57,7 +46,7 @@
 					<li><a class="dropdown-item" href="#!">Settings</a></li>
 					<li><a class="dropdown-item" href="#!">Activity Log</a></li>
 					<li><hr class="dropdown-divider" /></li>
-					<li><a class="dropdown-item" href="#!">Logout</a></li>
+					<li><a class="dropdown-item" href="views/adminLogin_V2.jsp">Logout</a></li>
 				</ul></li>
 		</ul>
 	</nav>
@@ -154,7 +143,7 @@
 				</div>
 				<div class="sb-sidenav-footer">
 					<div class="small">Logged in as:</div>
-					Start Bootstrap
+					Admin
 				</div>
 			</nav>
 		</div>
@@ -270,6 +259,9 @@
 								</div>
 
 								<div class="datatable-container">
+									<p>
+										<b>Original user Table</b>
+									</p>
 									<table class="datatable-table" id="datatablesSimple">
 										<thead>
 											<tr>
@@ -300,9 +292,50 @@
 													<td>${user.balance}</td>
 													<td>${user.accountNumber}</td>
 													<td><a
-														href="${pageContext.request.contextPath}/adminDashboardController?action=EDIT&id=${user.id}">Add
+														href="${pageContext.request.contextPath}/adminDashboardController?action=EDIT&id=${user.getId()}">Add
 															Balance</a> |<a
-														href="${pageContext.request.contextPath}/adminDashboardController?action=DELETE&id=${user.id}">Delete</a>
+														href="${pageContext.request.contextPath}/adminDashboardController?action=BAN&id=${user.getId()}">Ban</a>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+									<p>
+										<b>Banned user Table</b>
+									</p>
+									<table class="datatable-table" id="datatablesSimple">
+										<thead>
+											<tr>
+												<th>User Name</th>
+												<th>Gmail</th>
+												<th>Career</th>
+												<th>Balance</th>
+												<th>Account Number</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<!--  Following needs to be configured -->
+										<!-- <tfoot>
+								<tr>
+									<th>User Name</th>
+									<th>Gmail</th>
+									<th>Career</th>
+									<th>Balance</th>
+									<th>Actions</th>
+								</tr>
+								</tfoot> -->
+										<tbody>
+											<c:forEach items="${banUserList}" var="user">
+												<tr>
+													<td>${user.username}</td>
+													<td>${user.email}</td>
+													<td>${user.career}</td>
+													<td>${user.balance}</td>
+													<td>${user.accountNumber}</td>
+													<td><a
+														href="${pageContext.request.contextPath}/adminDashboardController?action=UNBAN&id=${user.getId()}">Unban
+													</a> |<a
+														href="${pageContext.request.contextPath}/adminDashboardController?action=DELETE&id=${user.getId()}">Delete</a>
 													</td>
 												</tr>
 											</c:forEach>
@@ -353,25 +386,34 @@
 						</footer>
 					</div>
 				</div>
-				
+
 				<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const dataTable = new SimpleDatatables("#datatablesSimple");
+					document
+							.addEventListener(
+									"DOMContentLoaded",
+									function() {
+										const dataTable = new SimpleDatatables(
+												"#datatablesSimple");
 
-        // Get the select element
-        const selectEntries = document.getElementById("entriesPerPage");
+										// Get the select element
+										const selectEntries = document
+												.getElementById("entriesPerPage");
 
-        // Add event listener to handle change event
-        selectEntries.addEventListener("change", function () {
-            // Get the selected value
-            const selectedValue = parseInt(selectEntries.value);
-            
-            // Update the DataTable with the new limit
-            dataTable.pageLength(selectedValue);
-        });
-    });
-</script>
-				
+										// Add event listener to handle change event
+										selectEntries
+												.addEventListener(
+														"change",
+														function() {
+															// Get the selected value
+															const selectedValue = parseInt(selectEntries.value);
+
+															// Update the DataTable with the new limit
+															dataTable
+																	.pageLength(selectedValue);
+														});
+									});
+				</script>
+
 				<script
 					src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 					crossorigin="anonymous"></script>
