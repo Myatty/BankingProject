@@ -2,6 +2,8 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/home_style.css" />
 
+<title>Home Page</title>
+
 </head>
 <body>
 	<!-- Below For Eclipse-->

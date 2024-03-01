@@ -63,9 +63,19 @@
 						<input type="text" name="nrcNumber" id="6487" required> <label>NRC
 							number</label>
 					</div>
+
+					<!-- Nrc Validation -->
+					<!--<div class="input-field">
+    				<input type="text" name="nrcNumber" id="6487" required pattern="[0-9]{1,2}/[a-zA-Z]\\([a-zA-Z]\\)[0-9]{6}">
+    				<label>NRC number</label>
+					</div>-->
+
 					<div class="input-field">
-						<input type="text" name="userGmail" id="6487" required> <label>Email</label>
+						<input type="text" name="userGmail" id="6487" required
+							pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+						<label>Email</label>
 					</div>
+
 					<div class="input-field">
 						<select id="4721" class="select-form" name="career"
 							style="height: 100%;" onchange="changes(this)">
@@ -78,7 +88,8 @@
 					</div>
 					<div class="input-field" style="display: flex;">
 						<input name="userPassword" id="password" type="password" required
-							style="border-radius: 3px 0 0 3px; border-right: none;">
+							style="border-radius: 3px 0 0 3px; border-right: none;"
+							oninput="checkPasswordStrength(this.value)">
 						<div class="pass" onclick="togglePassword()">
 							<span class="password-eye show-password" data-toggle="tooltip"
 								data-placement="top" title="show password"></span> <span
@@ -87,6 +98,30 @@
 						</div>
 						<label>Password</label>
 					</div>
+					<div id="passwordStrength"
+						style="color: red; opacity: 0; transition: opacity 0.3s;"></div>
+
+					<script>
+						function checkPasswordStrength(password) {
+							var passwordStrength = document
+									.getElementById("passwordStrength");
+							var strongRegex = new RegExp(
+									"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
+							if (password.length === 0) {
+								passwordStrength.style.opacity = 0; // Hide the message if password field is empty
+							} else {
+								if (strongRegex.test(password)) {
+									passwordStrength.innerHTML = "Password strength: Strong";
+									passwordStrength.style.color = "green";
+								} else {
+									passwordStrength.innerHTML = "Password strength: Weak";
+									passwordStrength.style.color = "red";
+								}
+								passwordStrength.style.opacity = 1; // Show the message if password field is filled
+							}
+						}
+					</script>
+
 					<button type="submit" onclick="toggle()">Register</button>
 				</form>
 
@@ -100,7 +135,7 @@
 			</div>
 		</div>
 
-		
+
 	</div>
 
 
@@ -147,4 +182,3 @@
 
 </html>
 <%@ include file="footer.jsp"%>
-

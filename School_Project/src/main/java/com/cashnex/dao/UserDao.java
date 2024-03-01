@@ -185,18 +185,17 @@ public class UserDao {
 
 	}
 
-	public boolean delete(int id) throws ClassNotFoundException, SQLException {
-		boolean flag = false;
-
-		String sql = "DELETE FROM usertable where id=" + id;
-		Connection con = DBUtility.getConnection();
-		PreparedStatement preparedStatement = con.prepareStatement(sql);
-		int rowDeleted = preparedStatement.executeUpdate();
-		if (rowDeleted > 0)
-			flag = true;
-
-		return flag;
-	}
+	/*
+	 * public boolean delete(int id) throws ClassNotFoundException, SQLException {
+	 * boolean flag = false;
+	 * 
+	 * String sql = "DELETE FROM usertable where id=" + id; Connection con =
+	 * DBUtility.getConnection(); PreparedStatement preparedStatement =
+	 * con.prepareStatement(sql); int rowDeleted =
+	 * preparedStatement.executeUpdate(); if (rowDeleted > 0) flag = true;
+	 * 
+	 * return flag; }
+	 */
 
 	// Insert Data using User Object
 	// Below methods are not updated
@@ -223,6 +222,142 @@ public class UserDao {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	//Phyo Zaw Linn
+	public List<User> getBanUserList() throws ClassNotFoundException, SQLException {
+
+		List<User> list = new ArrayList<User>();
+		User user = null;
+
+		Connection con = DBUtility.getConnection();
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM banned_user_table");
+
+		while (rs.next()) {
+			user = new User();
+			user.setUserId(rs.getInt("userId"));
+			user.setUsername(rs.getString("username"));
+			user.setNrcNumber(rs.getString("nrcNumber"));
+			user.setEmail(rs.getString("gmail"));
+			user.setCareer(rs.getString("Career"));
+			user.setBalance(rs.getDouble("balance"));
+			user.setPassword(rs.getString("hashedPassword"));
+			user.setAccountNumber(rs.getString("accountNumber"));
+
+			list.add(user);
+		}
+
+		return list;
+
+	}
+	
+	public boolean delete(int id) throws ClassNotFoundException, SQLException {
+		boolean flag = false;
+
+		String sql = "DELETE FROM banned_user_table where userid=" + id;
+		Connection con = DBUtility.getConnection();
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		int rowDeleted = preparedStatement.executeUpdate();
+		if (rowDeleted > 0)
+			flag = true;
+
+		return flag;
+	}
+
+	public boolean ban(int id) throws ClassNotFoundException, SQLException {
+
+	    Connection con = DBUtility.getConnection();
+
+	    User user = null;
+	    boolean banSuccessful = false;
+
+	    user = new User();
+	    String sql = "SELECT * FROM usertable where userId=" + id;
+	    Connection connection = DBUtility.getConnection();
+	    Statement statement = connection.createStatement();
+	    ResultSet resultSet = statement.executeQuery(sql);
+	    if (resultSet.next()) {
+	        user.setUserId(resultSet.getInt("userId"));
+	        user.setUsername(resultSet.getString("username"));
+	        user.setNrcNumber(resultSet.getString("nrcNumber"));
+	        user.setEmail(resultSet.getString("gmail"));
+	        user.setCareer(resultSet.getString("Career"));
+	        user.setBalance(resultSet.getDouble("balance"));
+	        user.setPassword(resultSet.getString("hashedPassword"));
+	        user.setAccountNumber(resultSet.getString("accountNumber"));
+	    }
+
+	    String dsql = "DELETE FROM usertable where userId=" + id;
+	    PreparedStatement deleteStatement = con.prepareStatement(dsql);
+	    int rowDeleted = deleteStatement.executeUpdate();
+	    
+	    if (rowDeleted > 0) {
+	        String insql = "INSERT INTO banned_user_table (username, nrcNumber, gmail, career, balance, hashedPassword, accountNumber)"
+	                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        PreparedStatement insertStatement = con.prepareStatement(insql);
+	        insertStatement.setString(1, user.getUsername());
+	        insertStatement.setString(2, user.getNrcNumber());
+	        insertStatement.setString(3, user.getEmail());
+	        insertStatement.setString(4, user.getCareer());
+	        insertStatement.setDouble(5, user.getBalance());
+	        insertStatement.setString(6, user.getPassword());
+	        insertStatement.setString(7, user.getAccountNumber());    
+	        int rowsInserted = insertStatement.executeUpdate();
+	        if (rowsInserted > 0) {
+	            banSuccessful = true;
+	        }
+	    }
+
+	    return banSuccessful;
+	}
+
+	public boolean unban(int id) throws ClassNotFoundException, SQLException {
+
+	    Connection con = DBUtility.getConnection();
+
+	    User user = null;
+	    boolean unbanSuccessful = false;
+
+	    user = new User();
+	    String sql = "SELECT * FROM banned_user_table where userid=" + id;
+	    Connection connection = DBUtility.getConnection();
+	    Statement statement = connection.createStatement();
+	    ResultSet resultSet = statement.executeQuery(sql);
+	    if (resultSet.next()) {
+	        user.setUserId(resultSet.getInt("userId"));
+	        user.setUsername(resultSet.getString("username"));
+	        user.setNrcNumber(resultSet.getString("nrcNumber"));
+	        user.setEmail(resultSet.getString("gmail"));
+	        user.setCareer(resultSet.getString("Career"));
+	        user.setBalance(resultSet.getDouble("balance"));
+	        user.setPassword(resultSet.getString("hashedPassword"));
+	        user.setAccountNumber(resultSet.getString("accountNumber"));
+	    }
+
+	    String dsql = "DELETE FROM banned_user_table where userid=" + id;
+	    PreparedStatement deleteStatement = con.prepareStatement(dsql);
+	    int rowDeleted = deleteStatement.executeUpdate();
+	    
+	    if (rowDeleted > 0) {
+	        String insql = "INSERT INTO usertable (username, nrcNumber, gmail, career, balance,hashedPassword, accountNumber)"
+	                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        PreparedStatement insertStatement = con.prepareStatement(insql);
+	        insertStatement.setString(1, user.getUsername());
+	        insertStatement.setString(2, user.getNrcNumber());
+	        insertStatement.setString(3, user.getEmail());
+	        insertStatement.setString(4, user.getCareer());
+	        insertStatement.setDouble(5, user.getBalance());
+	        insertStatement.setString(6, user.getPassword());
+	        insertStatement.setString(7, user.getAccountNumber());    
+	        int rowsInserted = insertStatement.executeUpdate();
+	        if (rowsInserted > 0) {
+	            unbanSuccessful = true;
+	        }
+	    }
+
+	    return unbanSuccessful;
+	}
+
 
 //    private ConnectionManager connectionManager;
 //

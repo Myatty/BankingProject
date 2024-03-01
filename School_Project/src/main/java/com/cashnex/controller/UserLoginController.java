@@ -86,7 +86,7 @@ public class UserLoginController extends HttpServlet {
 	        // Authentication failed, display error message to user
 	        request.setAttribute("errorMessage", "Invalid email or password");
 	        //request.getRequestDispatcher("/views/userLogin.jsp").forward(request, response);
-	        response.getWriter().append("LEE");
+	        response.getWriter().append("Access Denied");
 	    }
 	}
 
