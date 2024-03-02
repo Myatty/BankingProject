@@ -14,8 +14,102 @@
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
 </head>
-<body>
+
+<style>
+/* 
+Transfer Form Popup */
+.popup-wrapper {
+	padding-top: 10px;
+	position: fixed;
+	display: flex;
+	margin-top: 50px;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	flex-wrap: wrap;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: center;
+	backdrop-filter: blur(10px);
+	z-index: 5;
+}
+
+.popup-center {
+	padding: 40px;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	z-index: 6;
+	position: relative;
+	box-shadow: 5px 5px 10px 5px #0c03037d;
+	margin: auto;
+	flex-wrap: wrap;
+	flex-direction: column;
+	gap: 10px;
+	background-color: white;
+	justify-content: center;
+}
+
+.input-field input:is(:focus, :valid) {
+	border: 1px solid var(--brand-color);
+}
+
+.input-field {
+	position: relative;
+	height: 50px;
+}
+
+.input-field input {
+	padding-left: 10px;
+	height: 40px;
+}
+
+.input-field label {
+	position: absolute;
+	top: 40%;
+	left: 5px;
+	transform: translateY(-160%);
+	font-size: 0.75rem;
+	color: #4a4646;
+	pointer-events: none;
+	background-color: white;
+}
+
+.hide {
+	display: none;
+}
+</style>
+
 <body class="sb-nav-fixed">
+
+	<div class="popup-wrapper hide" id="transfer-popup">
+
+		<div class="popup-center" id="abc">
+			<div class="header">
+				<h3 class="title">
+					Transfer Money to <span id="user_name"></span>
+				</h3>
+				<button type="button" class="btn-close text-reset"
+					style="position: absolute; top: 5%; right: 5%;"
+					onclick="togglePopup(true)"></button>
+			</div>
+			<div class="bb" id="0912">
+				<form method="post"
+					action="${pageContext.request.contextPath}/adminDashboardController?action=ADD_BALANCE&id="
+					style="padding: 30px;">
+					<div class="input-field">
+						<input type="text" name="amount" required> <label for="">Amount</label>
+					</div>
+					<div class="input-field">
+						<input type="password" name="password" required> <label
+							for="">Password</label>
+					</div>
+					<button type="submit" class="btn btn-primary">Confirm</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
@@ -291,9 +385,12 @@
 													<td>${user.career}</td>
 													<td>${user.balance}</td>
 													<td>${user.accountNumber}</td>
-													<td><a
-														href="${pageContext.request.contextPath}/adminDashboardController?action=EDIT&id=${user.getId()}">Add
-															Balance</a> |<a
+													<td>
+														<div
+															onclick='preloadPopup(${user.id}, "${user.username}", "${pageContext.request.contextPath}")'>
+															<a href="#popup"
+																data-bs-target="#demo">Add Balance</a>
+														</div> |<a
 														href="${pageContext.request.contextPath}/adminDashboardController?action=BAN&id=${user.getId()}">Ban</a>
 													</td>
 												</tr>
@@ -414,6 +511,8 @@
 									});
 				</script>
 
+				<script
+					src="${pageContext.request.contextPath}/resources/js/admintransferpopup.js?version=1"></script>
 				<script
 					src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 					crossorigin="anonymous"></script>

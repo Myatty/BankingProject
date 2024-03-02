@@ -358,7 +358,20 @@ public class UserDao {
 	    return unbanSuccessful;
 	}
 
-
+	//THS
+	
+	public boolean addUserAmount(int id, double amount) throws ClassNotFoundException, SQLException {
+		String sql = "UPDATE usertable SET balance = balance +" + amount + " WHERE userId=" + id;
+		Connection con = DBUtility.getConnection();
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		try {
+			pstmt.executeUpdate();
+		}
+		catch(SQLException e) {
+			return false;
+		}
+		return true;
+	}
 //    private ConnectionManager connectionManager;
 //
 //    public UserDao(ConnectionManager connectionManager) {
