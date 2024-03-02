@@ -311,3 +311,35 @@ p.attribution a {
 	border-radius: 3%;
 
 }
+
+/* Custom styling for the banner */
+#banner {
+	background-color: var(--inquiry-box);
+	padding: 20px 0;
+	text-align: center;
+	margin-top: 20px ;
+	border-radius: 10px;
+}
+
+#banner-row{
+	position: relative;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.bank{
+	max-width: 15%;
+	height: 100px;
+}
+.loan {
+	max-width: 15%;
+	height: 100px;
+}
+.transaction {
+	max-width: 15%;
+	height: 100px;
+}
+.wallet {
+	max-width: 15%;
+	height: 100px;
+}
