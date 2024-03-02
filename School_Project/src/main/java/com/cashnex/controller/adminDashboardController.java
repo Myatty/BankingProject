@@ -21,10 +21,6 @@ public class adminDashboardController extends HttpServlet {
 		userDao = new UserDao();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -33,11 +29,11 @@ public class adminDashboardController extends HttpServlet {
 			action = "LIST";
 		}
 		switch (action) {
+		
 		case "LIST":
 			try {
 				listUser(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -46,7 +42,6 @@ public class adminDashboardController extends HttpServlet {
 			try {
 				getUser(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -55,7 +50,6 @@ public class adminDashboardController extends HttpServlet {
 			try {
 				deleteUser(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -64,7 +58,6 @@ public class adminDashboardController extends HttpServlet {
 			try {
 				banUser(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -73,7 +66,6 @@ public class adminDashboardController extends HttpServlet {
 			try {
 				unbanUser(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -82,7 +74,6 @@ public class adminDashboardController extends HttpServlet {
 			try {
 				listUser(request, response);
 			} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -111,7 +102,6 @@ public class adminDashboardController extends HttpServlet {
 		try {
 			user = UserDao.getUserById(Integer.parseInt(id));
 		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -160,33 +150,47 @@ public class adminDashboardController extends HttpServlet {
 			throws ServletException, IOException {
 
 		String id = request.getParameter("id");
-		User user = new User();
-		user.setUsername(request.getParameter("username"));
-		user.setNrcNumber(request.getParameter("nrcNumber"));
-		user.setEmail(request.getParameter("gmail"));
-		user.setCareer(request.getParameter("career"));
-		if (id.isEmpty() || id == null) {
-			try {
-				if (userDao.saveUser(user)) {
-					request.setAttribute("MSG", "Successfully Saved!");
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		String action = request.getParameter("action");
+		switch(action) {
+			case "ADD_BALANCE":
+				try {
+					System.out.println("AYO");
+					add_balance(request, response);
+				} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				break;
+			default:
+				try {
+					listUser(request, response);
+				} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				break;
+			}
 
-			}
-		} else {
-			user.setUserId(Integer.parseInt(id));
-			if (userDao.updateUser(user)) {
-				request.setAttribute("MSG", "Successfully Updated!");
-			}
-		}
+	}
+	
+	private void add_balance(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, NumberFormatException, ClassNotFoundException, SQLException {
+		
+		String id = request.getParameter("id");
+		String amount = request.getParameter("amount");
+		String message = "Money Transfer was Successful";
+		
 		try {
-			listUser(request, response);
-		} catch (ClassNotFoundException | ServletException | IOException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			userDao.addUserAmount(Integer.parseInt(id), Double.parseDouble(amount));
+		} catch(Exception e) {
+			message = "";
 		}
+		request.getSession().setAttribute("notification", message);
+		System.out.println("mewssage: " + message);
+		response.sendRedirect(request.getContextPath() + "/adminDashboardController?condition=true");
+		
+		//request.setAttribute("notification", message);
+		//request.getRequestDispatcher("/adminDashboardController").forward(request, response);
 
 	}
 
