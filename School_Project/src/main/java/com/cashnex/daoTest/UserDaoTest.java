@@ -1,8 +1,8 @@
 package com.cashnex.daoTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
 import com.cashnex.dao.ConnectionManager;
 import com.cashnex.dao.UserDao;

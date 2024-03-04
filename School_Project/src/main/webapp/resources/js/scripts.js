@@ -24,3 +24,39 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+
+
+
+function togglePopup(id, hide) {
+    let popup = document.getElementById(id);
+	if(hide==false) {
+		popup.classList.remove("hide");
+	} else {
+		popup.classList.add("hide");
+	}
+}
+
+
+var slider = document.getElementById("payLoanRange");
+var num = document.getElementById("payLoanValue");
+slider.oninput = function updateTextInput() {
+    num.value = slider.value;
+}
+
+
+
+var form_id = document.getElementById("pay_loan_id");
+var form_acc_num = document.getElementById("pay_loan_acc_num");
+var form_left = document.getElementById("pay_loan_left_amount");
+var form_pay_amount = document.getElementById("payLoanRange");
+
+
+function fillIn(id) {
+    let abc = document.getElementById(id);
+    let left_amount = abc.lastElementChild.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML - abc.lastElementChild.previousElementSibling.previousElementSibling.innerHTML;
+    form_id.value = abc.firstElementChild.innerHTML;
+    form_acc_num.value = abc.firstElementChild.nextElementSibling.nextElementSibling.innerHTML;
+    form_left.value = left_amount;
+    form_pay_amount.max = left_amount;
+}
