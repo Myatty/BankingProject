@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import com.cashnex.dao.UserDao;
 import com.cashnex.model.User;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,7 +51,15 @@ public class UserDashboardController extends HttpServlet {
         if (user != null) {
             // User data retrieved successfully, forward to dashboard with user data
             request.setAttribute("user", user);
-            request.getRequestDispatcher("userDashboard.jsp").forward(request, response);
+            // Forward to the first JSP page
+            RequestDispatcher dispatcher1 = request.getRequestDispatcher("userDashboard.jsp");
+            dispatcher1.forward(request, response);
+
+            // More processing in the servlet
+            
+            // Forward to the second JSP page
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("loan.jsp");
+            dispatcher2.forward(request, response);
         } else {
             // User data not found, handle error
             // You can redirect to an error page or display an error message

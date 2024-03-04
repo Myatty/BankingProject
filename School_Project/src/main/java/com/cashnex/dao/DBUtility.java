@@ -8,7 +8,7 @@ public class DBUtility {
 
     private static final String URL = "jdbc:mysql://localhost/bankingdb";
     private static final String USER = "root";
-    private static final String PASSWORD = "Lucifer";
+    private static final String PASSWORD = "12345";
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("com.mysql.cj.jdbc.Driver"); 
